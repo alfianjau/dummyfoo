@@ -16,13 +16,12 @@ client.connect(function(err) {
   console.log('Connected successfully to server')
 
   const db = client.db(dbName)
+
   insertDocuments(db, function() {
     findDocuments(db, function() {
       client.close()
     })
   })
-
-  client.close()
 })
 
 const insertDocuments = function(db, callback) {
