@@ -18,7 +18,7 @@ client.connect(function(err) {
   const db = client.db(dbName)
 
   insertDocuments(db, function() {
-    updateDocuments(db, function() {
+    indexCollection(db, function() {
       client.close()
     })
   })
@@ -58,5 +58,27 @@ const updateDocument = function(db, callback) {
     assert.equal(1, result.result.n)
     console.log('Updated the document with the field a equal to 2')
     callback(result)
+  })
+}
+
+const removeDocument = function(db, callback) {
+  // Get the documents collection
+  const collection = db.collection('documents')
+  // Delete document where a is 3
+  collection.deleteOne({ a: 1 }, function(err, result) {
+    assert.equal(err, null)
+    assert.equal(1, result.result.n)
+    console.log('Removed the document with the field a equal to 3')
+    callback(result)
+  })
+}
+
+const indexCollection = function(db, callback) {
+  db.collection('documents').createIndex({ a: 1 }, null, function(
+    err,
+    results
+  ) {
+    console.log(results)
+    callback()
   })
 }
