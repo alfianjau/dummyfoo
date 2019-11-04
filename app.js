@@ -16,6 +16,11 @@ client.connect(function(err) {
   console.log('Connected successfully to server')
 
   const db = client.db(dbName)
+  insertDocuments(db, function() {
+    findDocuments(db, function() {
+      client.close()
+    })
+  })
 
   client.close()
 })
@@ -30,5 +35,17 @@ const insertDocuments = function(db, callback) {
     assert.equal(3, result.ops.length)
     console.log('Inserted 3 documents into the collection')
     callback(result)
+  })
+}
+
+const findDocuments = function(db, callback) {
+  // Get the documents collection
+  const collection = db.collection('documents')
+  // Find some documents
+  collection.find({}).toArray(function(err, docs) {
+    assert.equal(err, null)
+    console.log('Found the following records')
+    console.log(docs)
+    callback(docs)
   })
 }
