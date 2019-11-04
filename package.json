@@ -1,0 +1,11 @@
+{
+  "name": "foo",
+  "version": "1.0.0",
+  "description": "testing first setup mongodb",
+  "main": "index.js",
+  "author": "Alfianjau",
+  "license": "MIT",
+  "dependencies": {
+    "mongodb": "^3.3.3"
+  }
+}
